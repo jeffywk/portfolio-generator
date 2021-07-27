@@ -7,7 +7,7 @@ const promptUser = () => {
                 name: 'name',
                 message: 'What is your name? (Required)',
                 validate: nameInput => {
-                    if (nameiNput) {
+                    if (nameInput) {
                         return true;
                     } else {
                         console.log('Please enter your name!');
@@ -27,9 +27,22 @@ const promptUser = () => {
                 }
             },
             {
+                type: 'confirm',
+                name: 'confrimAbout',
+                message: 'Would you like to enter some information about yourself for an "About" section?',
+                default: true
+            },
+            {
                 type: 'input',
                 name: 'about',
-                message: 'Enter some information about yourself:'
+                message: 'Provide some information about yourself:',
+                when: ({ confirmAbout }) => {
+                    if (confirmAbout) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
             }
         ]);
 };
