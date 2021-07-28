@@ -1,7 +1,6 @@
 const fs = require('fs');
-const generatePage = require('./src/page-template');
 const inquirer = require('inquirer');
-
+const generatePage = require('./src/page-template');
 
 const promptUser = () => {
     return inquirer.prompt([
@@ -52,22 +51,24 @@ const promptProject = portfolioData => {
     Add a New Project
     =================
     `);
+
     // If there's no 'projects' array property, create one
     if (!portfolioData.projects) {
         portfolioData.projects = [];
     }
-    return inquirer.prompt([
-        {
-            type: 'input',
-            name: 'name',
-            message: 'What is the name of your project? (Required)',
-            validate: nameInput => {
-                if (nameInput) {
-                    return true;
-                } else {
-                    console.log('Please enter your project name!');
-                    return false;
-                }
+    return inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: 'What is the name of your project? (Required)',
+                validate: nameInput => {
+                    if (nameInput) {
+                        return true;
+                    } else {
+                        console.log('Please enter your project name!');
+                        return false;
+                    }
             }
         },
         {
@@ -98,6 +99,7 @@ const promptProject = portfolioData => {
                     return true;
                 } else {
                     console.log('Enter the GitHub link to your project!');
+                    return false;
                 }
             }
         },
@@ -130,12 +132,6 @@ promptUser()
         const pageHTML = generatePage();
         fs.writeFile('./index.html', pageHTML, err => {
            if (err) throw new Error(err);
-
+           console.log('Page created! Check out index.html in this directory to see it!');
         });
-    //     console.log(portfolioData);
-    //     const pageHTML = generatePage(portfolioData);       
-    //     fs.writeFile('./index.html'NM,N  generatePage(name, github), err => {
-    //       if (err) throw new Error(err);
-    //       console.log('Portfolio complete! Check out index.html to see the output!');
-    // });
-});
+    });
